@@ -5,12 +5,14 @@ from .address_book import AddressBook
 from .record import Record
 from .command import Command
 from .fields import *
+from .notes_book import NotesBook
 
 init(autoreset=True)
 
 class Bot:
     def __init__(self):
         self.address_book = AddressBook.load()
+        self.notes_book = NotesBook()
 
     def input_error(func):
         def inner(*args, **kwargs):
@@ -230,6 +232,37 @@ class Bot:
         print(Fore.GREEN + f"Contact '{name}' has been added/updated successfully.")
 
 
+    @input_error
+    def add_note(self, args):
+        title, content = args[0], " ".join(args[1:])
+        return self.notes_book.add_note(title, content)
+
+    @input_error
+    def find_note(self, args):
+        title = args[0]
+        return self.notes_book.find_note(title)
+    
+    @input_error
+    def sort_notes(self, by="title"):
+        if by == "title":
+            self.notes = sorted(self.notes, key=lambda note: note['title'].lower())
+        elif by == "date":
+            self.notes = sorted(self.notes, key=lambda note: note['date'])
+
+    @input_error
+    def edit_note(self, args):
+        title, new_content = args[0], " ".join(args[1:])
+        return self.notes_book.edit_note(title, new_content)
+
+    @input_error
+    def delete_note(self, args):
+        title = args[0]
+        return self.notes_book.delete_note(title)
+
+    @input_error
+    def show_all_notes(self, args=None):
+        return self.notes_book.show_all_notes()
+    
     def show_help(self):
         help_text = Fore.CYAN + "Available commands:\n"
         help_text += Fore.YELLOW + """
@@ -251,6 +284,11 @@ class Bot:
         find <name> - Find contacts by name.
         exit, close - Exit the bot.
         help - Show this help text.
+        add-note <title> <content> - Add a new note.
+        find-note <title> - Find a note by title.
+        edit-note <title> <new_content> - Edit an existing note.
+        delete-note <title> - Delete a note by title.
+        all-notes - Show all notes.
         """
         return help_text
 
@@ -304,3 +342,16 @@ class Bot:
                 print(self.show_address(args))
             elif cmd_enum == Command.FIND:
                 print(self.find_contact(args))
+            elif cmd_enum == Command.ADD_NOTE:
+                print(self.add_note(args))
+            elif cmd_enum == Command.FIND_NOTE:
+                print(self.find_note(args))
+            elif cmd_enum == Command.EDIT_NOTE:
+                print(self.edit_note(args))
+            elif cmd_enum == Command.DELETE_NOTE:
+                print(self.delete_note(args))
+            elif cmd_enum == Command.ALL_NOTES:
+                print(self.show_all_notes()) 
+            
+            else:
+                print(Fore.RED + "Unknown command.")

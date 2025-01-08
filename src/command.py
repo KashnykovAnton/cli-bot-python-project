@@ -20,3 +20,8 @@ class Command(Enum):
     ADD_ADDRESS = "add-address"
     SHOW_ADDRESS = "show-address"
     FIND = "find"
+    ADD_NOTE = 'add-note'
+    FIND_NOTE = 'find-note'
+    EDIT_NOTE = 'edit-note'
+    DELETE_NOTE = 'delete-note'
+    ALL_NOTES = 'all-notes'
