@@ -7,6 +7,7 @@ class Command(Enum):
     ADD_CONTACT = "add-contact"
     ADD = "add"
     CHANGE = "change"
+    CHANGE_NAME = "change-name"
     REMOVE = "remove"
     PHONE = "phone"
     REMOVE_PHONE = "remove-phone"

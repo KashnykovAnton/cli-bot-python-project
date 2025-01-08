@@ -31,7 +31,6 @@ class Bot:
         contact_phone = Phone(phone)
         record = self.address_book.find(name)
         if isinstance(record, str):
-            print(record)
             record = None
         message = "updated"
         if record is None:
@@ -43,14 +42,31 @@ class Bot:
         return Fore.GREEN + f"Contact {name} {message} successfully."
 
     @input_error
-    def change_contact(self, args):
+    def change_phone(self, args):
         name, old_phone, new_phone = args
         record = self.address_book.find(name)
         if isinstance(record, str):
-            print(record)
             record = None
         if record:
             return record.edit_phone(old_phone, new_phone)
+        return Fore.RED + "Contact not found."
+
+    @input_error
+    def change_name(self, args):
+        old_name, new_name = args
+        if old_name == new_name:
+            return Fore.YELLOW + "New name should be different from the old one."
+        if new_name in self.address_book:
+            return Fore.RED + f"A contact with the name '{new_name}' already exists."
+        
+        record = self.address_book.find(old_name)
+        if isinstance(record, str):
+            record = None
+        if record:
+            del self.address_book[old_name]
+            result = record.edit_name(old_name, new_name)
+            self.address_book[new_name] = record
+            return result
         return Fore.RED + "Contact not found."
 
     @input_error
@@ -58,7 +74,6 @@ class Bot:
         name = args[0]
         record = self.address_book.find(name)
         if isinstance(record, str):
-            print(record)
             record = None
         if record:
             return record.show_phones()
@@ -78,7 +93,6 @@ class Bot:
         contact_birthday = Birthday(birthday)
         record = self.address_book.find(name)
         if isinstance(record, str):
-            print(record)
             record = None
         if record:
             return record.add_birthday(contact_birthday)
@@ -89,7 +103,6 @@ class Bot:
         name = args[0]
         record = self.address_book.find(name)
         if isinstance(record, str):
-            print(record)
             record = None
         if record:
             return record.show_birthday()
@@ -116,7 +129,6 @@ class Bot:
         name, phone = args
         record = self.address_book.find(name)
         if isinstance(record, str):
-            print(record)
             record = None
         if record:
             return record.remove_phone(phone)
@@ -127,7 +139,6 @@ class Bot:
         name, email = args
         record = self.address_book.find(name)
         if isinstance(record, str):
-            print(record)
             record = None
         if record:
             return record.add_email(email)
@@ -138,7 +149,6 @@ class Bot:
         name = args[0]
         record = self.address_book.find(name)
         if isinstance(record, str):
-            print(record)
             record = None
         if record:
             return record.show_email()
@@ -150,7 +160,6 @@ class Bot:
         address = " ".join(args[1:])
         record = self.address_book.find(name)
         if isinstance(record, str):
-            print(record)
             record = None
         if record:
             return record.add_address(address)
@@ -161,7 +170,6 @@ class Bot:
         name = args[0]
         record = self.address_book.find(name)
         if isinstance(record, str):
-            print(record)
             record = None
         if record:
             return record.show_address()
@@ -188,6 +196,8 @@ class Bot:
             print(Fore.RED + "Name is required. Cancelling operation.")
             return
         record = self.address_book.find(name)
+        if isinstance(record, str):
+            record = None
         if record:
             print(Fore.YELLOW + f"Contact '{name}' already exists. Updating contact.")
         phone = input(Fore.YELLOW + "Enter phone number: ").strip()
@@ -200,30 +210,21 @@ class Bot:
         # Step 2: Add Email
         email = input(Fore.YELLOW + "Enter email (leave empty to skip): ").strip()
         if email:
-            try:
-                print(self.add_email([name, email]))
-            except Exception as e:
-                print(Fore.RED + f"Error adding email: {e}")
+            print(self.add_email([name, email]))
         else:
             print(Fore.YELLOW + "Email not set. Skipping email.")
 
         # Step 3: Add Address
         address = input(Fore.YELLOW + "Enter address (leave empty to skip): ").strip()
         if address:
-            try:
-                print(self.add_address([name, address]))
-            except Exception as e:
-                print(Fore.RED + f"Error adding address: {e}")
+            print(self.add_address([name, address]))
         else:
             print(Fore.YELLOW + "Address not set. Skipping address.")
 
         # Step 4: Add Birthday
         birthday = input(Fore.YELLOW + "Enter birthday (YYYY-MM-DD, leave empty to skip): ").strip()
         if birthday:
-            try:
-                print(self.add_birthday([name, birthday]))
-            except Exception as e:
-                print(Fore.RED + f"Error adding birthday: {e}")
+            print(self.add_birthday([name, birthday]))
         else:
             print(Fore.YELLOW + "Birthday not set. Skipping birthday.")
 
@@ -237,6 +238,7 @@ class Bot:
         add-contact - Add a new contact with all fields.
         add <name> <phone> - Add a new contact or update an existing one.
         change <name> <old_phone> <new_phone> - Change a contact's phone number.
+        change-name <old_name> <new_name> - Change a contact's name.
         phone <name> - Show phone numbers of a contact.
         remove <name> - Remove a contact from the address book.
         remove-phone <name> <phone> - Remove a specific phone number from a contact.
@@ -277,7 +279,9 @@ class Bot:
             elif cmd_enum == Command.ADD:
                 print(self.add_contact(args))
             elif cmd_enum == Command.CHANGE:
-                print(self.change_contact(args))
+                print(self.change_phone(args))
+            elif cmd_enum == Command.CHANGE_NAME:
+                print(self.change_name(args))
             elif cmd_enum == Command.PHONE:
                 print(self.show_phone(args))
             elif cmd_enum == Command.REMOVE_PHONE:
