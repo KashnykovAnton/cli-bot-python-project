@@ -6,6 +6,7 @@ from .record import Record
 from .command import Command
 from .fields import *
 from .notes_book import NotesBook
+from src.utils import input_error
 
 init(autoreset=True)
 
@@ -13,14 +14,6 @@ class Bot:
     def __init__(self):
         self.address_book = AddressBook.load()
         self.notes_book = NotesBook()
-
-    def input_error(func):
-        def inner(*args, **kwargs):
-            try:
-                return func(*args, **kwargs)
-            except (KeyError, ValueError, IndexError) as e:
-                return Fore.RED + f"Error: {str(e)}"
-        return inner
 
     def parse_input(self, user_input):
         cmd, *args = user_input.split()
