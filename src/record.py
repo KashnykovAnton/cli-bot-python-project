@@ -50,6 +50,13 @@ class Record:
         except ValueError as e:
             return Fore.RED + f"An error occurred while editing phone: {e}"
 
+    def edit_name(self, old_name, new_name):
+        try:
+            self.name = Name(new_name)
+            return Fore.GREEN + f"Contact name {old_name} successfully changed to {new_name}."
+        except ValueError as e:
+            return Fore.RED + f"An error occurred while editing name: {e}"
+
     def show_phones(self):
         try:
             phones = "; ".join(p.value for p in self.phones)
