@@ -261,14 +261,17 @@ class Bot:
         help_text = Fore.CYAN + "Available commands:\n"
         help_text += Fore.YELLOW + """
         hello - Greet the bot.
+        exit, close - Exit the bot.
+        help - Show this help text.
         add-contact - Add a new contact with all fields.
-        add <name> <phone> - Add a new contact or update an existing one.
-        change <name> <old_phone> <new_phone> - Change a contact's phone number.
-        change-name <old_name> <new_name> - Change a contact's name.
-        phone <name> - Show phone numbers of a contact.
-        remove <name> - Remove a contact from the address book.
+        find-contact <name> - Find contacts by name.
+        remove-contact <name> - Remove a contact from the address book.
+        all-contacts - Show all contacts in the address book.
+        add-phone <name> <phone> - Add a new contact or update an existing one.
+        change-phone <name> <old_phone> <new_phone> - Change a contact's phone number.
+        show_phone <name> - Show phone numbers of a contact.
         remove-phone <name> <phone> - Remove a specific phone number from a contact.
-        all - Show all contacts in the address book.
+        change-name <old_name> <new_name> - Change a contact's name.
         add-birthday <name> <birthday> - Add a birthday to a contact (format: YYYY-MM-DD).
         show-birthday <name> - Show a contact's birthday.
         birthdays [days] - Show contacts with upcoming birthdays in the next [days] days (default: 7).
@@ -276,9 +279,6 @@ class Bot:
         show-email <name> - Show the email of a contact.
         add-address <name> <address> - Add an address to a contact.
         show-address <name> - Show the address of a contact.
-        find <name> - Find contacts by name.
-        exit, close - Exit the bot.
-        help - Show this help text.
         add-note <title> <content> - Add a new note.
         find-note <title> - Find a note by title.
         edit-note <title> <new_content> - Edit an existing note.
@@ -307,19 +307,19 @@ class Bot:
                 print(Fore.GREEN + "How can I help you?")
             elif cmd_enum == Command.ADD_CONTACT:
                 self.add_full_contact()
-            elif cmd_enum == Command.ADD:
+            elif cmd_enum == Command.ADD_PHONE:
                 print(self.add_contact(args))
-            elif cmd_enum == Command.CHANGE:
+            elif cmd_enum == Command.CHANGE_PHONE:
                 print(self.change_phone(args))
             elif cmd_enum == Command.CHANGE_NAME:
                 print(self.change_name(args))
-            elif cmd_enum == Command.PHONE:
+            elif cmd_enum == Command.SHOW_PHONE:
                 print(self.show_phone(args))
             elif cmd_enum == Command.REMOVE_PHONE:
                 print(self.remove_phone(args))
-            elif cmd_enum == Command.REMOVE:
+            elif cmd_enum == Command.REMOVE_CONTACT:
                 print(self.remove_contact(args))
-            elif cmd_enum == Command.ALL:
+            elif cmd_enum == Command.ALL_CONTACTS:
                 print(self.show_all())
             elif cmd_enum == Command.ADD_BIRTHDAY:
                 print(self.add_birthday(args))
