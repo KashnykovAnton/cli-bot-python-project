@@ -225,6 +225,65 @@ class Bot:
 
         print(Fore.GREEN + f"Contact '{name}' has been added/updated successfully.")
 
+    @input_error
+    def change_full_contact(self, args):
+        print(Fore.CYAN + "Changing an existing contact. Follow the steps below:")
+        
+        # Step 1: Enter Old Name
+        old_name = input(Fore.YELLOW + "Enter the current name of the contact: ").strip()
+        record = self.address_book.find(old_name)
+        if isinstance(record, str):
+            record = None
+        if not record:
+            print(Fore.RED + f"Contact '{old_name}' not found.")
+            return
+
+        # Step 2: Change Name
+        new_name = input(Fore.YELLOW + f"Enter new name for '{old_name}' (leave empty to skip): ").strip()
+        if new_name:
+            result = self.change_name([old_name, new_name])
+            if result is not None and not isinstance(result, str):
+                old_name = new_name
+            print(result)
+        else:
+            print(Fore.YELLOW + "Name not changed. Skipping.")
+
+        # Step 3: Change Phone
+        phone_action = input(Fore.YELLOW + "Do you want to update phone numbers? (yes/no): ").strip().lower()
+        if phone_action == "yes":
+            old_phone = input(Fore.YELLOW + "Enter the phone number to replace (leave empty to skip): ").strip()
+            new_phone = input(Fore.YELLOW + "Enter the new phone number (leave empty to skip): ").strip()
+            if old_phone and new_phone:
+                print(self.change_phone([old_name, old_phone, new_phone]))
+            elif new_phone:
+                print(self.add_contact([old_name, new_phone]))
+            else:
+                print(Fore.YELLOW + "Phone not changed. Skipping.")
+        else:
+            print(Fore.YELLOW + "Phone change skipped.")
+
+        # Step 4: Change Email
+        email = input(Fore.YELLOW + "Enter new email (leave empty to skip): ").strip()
+        if email:
+            print(self.add_email([old_name, email]))
+        else:
+            print(Fore.YELLOW + "Email not changed. Skipping.")
+
+        # Step 5: Change Address
+        address = input(Fore.YELLOW + "Enter new address (leave empty to skip): ").strip()
+        if address:
+            print(self.add_address([old_name, address]))
+        else:
+            print(Fore.YELLOW + "Address not changed. Skipping.")
+
+        # Step 6: Change Birthday
+        birthday = input(Fore.YELLOW + "Enter new birthday (YYYY-MM-DD, leave empty to skip): ").strip()
+        if birthday:
+            print(self.add_birthday([old_name, birthday]))
+        else:
+            print(Fore.YELLOW + "Birthday not changed. Skipping.")
+
+        print(Fore.GREEN + f"Contact '{old_name}' has been updated successfully.")
 
     @input_error
     def add_note(self, args):
@@ -263,13 +322,14 @@ class Bot:
         hello - Greet the bot.
         exit, close - Exit the bot.
         help - Show this help text.
-        add-contact - Add a new contact with all fields.
+        add-contact - Add a new contact with all fields interactively.
+        change-contact - Update all fields of an existing contact interactively.
         find-contact <name> - Find contacts by name.
         remove-contact <name> - Remove a contact from the address book.
         all-contacts - Show all contacts in the address book.
         add-phone <name> <phone> - Add a new contact or update an existing one.
         change-phone <name> <old_phone> <new_phone> - Change a contact's phone number.
-        show_phone <name> - Show phone numbers of a contact.
+        show-phone <name> - Show phone numbers of a contact.
         remove-phone <name> <phone> - Remove a specific phone number from a contact.
         change-name <old_name> <new_name> - Change a contact's name.
         add-birthday <name> <birthday> - Add a birthday to a contact (format: YYYY-MM-DD).
@@ -307,6 +367,8 @@ class Bot:
                 print(Fore.GREEN + "How can I help you?")
             elif cmd_enum == Command.ADD_CONTACT:
                 self.add_full_contact()
+            elif cmd_enum == Command.CHANGE_CONTACT:
+                self.change_full_contact(args)
             elif cmd_enum == Command.ADD_PHONE:
                 print(self.add_contact(args))
             elif cmd_enum == Command.CHANGE_PHONE:
@@ -337,7 +399,7 @@ class Bot:
                 print(self.add_address(args))
             elif cmd_enum == Command.SHOW_ADDRESS:
                 print(self.show_address(args))
-            elif cmd_enum == Command.FIND:
+            elif cmd_enum == Command.FIND_CONTACT:
                 print(self.find_contact(args))
             elif cmd_enum == Command.ADD_NOTE:
                 print(self.add_note(args))
