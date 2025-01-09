@@ -4,6 +4,7 @@ from collections import UserDict
 from .address_book import AddressBook
 from .record import Record
 from .command import Command
+from .completer import Prompt
 from .fields import *
 from .notes_book import NotesBook
 from src.utils import input_error
@@ -14,6 +15,7 @@ class Bot:
     def __init__(self):
         self.address_book = AddressBook.load()
         self.notes_book = NotesBook.load()
+        self.prompt = Prompt()
 
     def parse_input(self, user_input):
         cmd, *args = user_input.split()
@@ -349,12 +351,45 @@ class Bot:
 
     def run(self):
         print(Fore.GREEN + "Welcome to the assistant bot!")
+
+        command_names = {
+            "exit": Command.EXIT,
+            "close": Command.CLOSE,
+            "hello": Command.HELLO,
+            "help": Command.HELP,
+            "add-contact": Command.ADD_CONTACT,
+            "change-contact": Command.CHANGE_CONTACT,
+            "find-contact": Command.FIND_CONTACT,
+            "remove-contact": Command.REMOVE_CONTACT,
+            "all-contacts": Command.ALL_CONTACTS,
+            "add-phone": Command.ADD_PHONE,
+            "change-phone": Command.CHANGE_PHONE,
+            "change-name": Command.CHANGE_NAME,
+            "show-phone": Command.SHOW_PHONE,
+            "remove-phone": Command.REMOVE_PHONE,
+            "add-birthday": Command.ADD_BIRTHDAY,
+            "show-birthday": Command.SHOW_BIRTHDAY,
+            "birthdays": Command.BIRTHDAYS,
+            "add-email": Command.ADD_EMAIL,
+            "show-email": Command.SHOW_EMAIL,
+            "add-address": Command.ADD_ADDRESS,
+            "show-address": Command.SHOW_ADDRESS,
+            "add-note": Command.ADD_NOTE,
+            "find-note": Command.FIND_NOTE,
+            "edit-note": Command.EDIT_NOTE,
+            "delete-note": Command.DELETE_NOTE,
+            "all-notes": Command.ALL_NOTES,
+        }
+
+        all_commands = list(command_names.keys())
+        
         while True:
-            user_input = input(Fore.BLUE + "Enter a command: ")
-            command, args = self.parse_input(user_input)
+            message_text = "Enter a command: "
+            styled_message = {message_text: "#0000FF"}
+            user_input = self.prompt.styled_prompt(styled_message, all_commands).strip().lower()
 
             try:
-                cmd_enum = Command(command)
+                cmd_enum = command_names[user_input]
             except ValueError:
                 print(Fore.RED + "Invalid command.")
                 continue
