@@ -12,7 +12,7 @@ init(autoreset=True)
 class Bot:
     def __init__(self):
         self.address_book = AddressBook.load()
-        self.notes_book = NotesBook()
+        self.notes_book = NotesBook.load()
 
     def input_error(func):
         def inner(*args, **kwargs):
@@ -307,6 +307,7 @@ class Bot:
             if cmd_enum in {Command.EXIT, Command.CLOSE}:
                 print(Fore.GREEN + "Good bye!")
                 self.address_book.save()
+                self.notes_book.save()
                 break
             elif cmd_enum == Command.HELLO:
                 print(Fore.GREEN + "How can I help you?")
