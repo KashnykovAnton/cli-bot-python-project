@@ -4,7 +4,7 @@ from collections import UserDict
 from .address_book import AddressBook
 from .record import Record
 from .command import Command
-from .completer import Prompt #
+from .completer import Prompt
 from .fields import *
 from .notes_book import NotesBook
 from src.utils import input_error
@@ -14,8 +14,8 @@ init(autoreset=True)
 class Bot:
     def __init__(self):
         self.address_book = AddressBook.load()
-        self.notes_book = NotesBook()
-        self.prompt = Prompt() #
+        self.notes_book = NotesBook.load()
+        self.prompt = Prompt()
 
     def parse_input(self, user_input):
         cmd, *args = user_input.split()
@@ -397,6 +397,7 @@ class Bot:
             if cmd_enum in {Command.EXIT, Command.CLOSE}:
                 print(Fore.GREEN + "Good bye!")
                 self.address_book.save()
+                self.notes_book.save()
                 break
             elif cmd_enum == Command.HELLO:
                 print(Fore.GREEN + "How can I help you?")
