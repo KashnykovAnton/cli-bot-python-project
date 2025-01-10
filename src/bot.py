@@ -341,9 +341,10 @@ class Bot:
         show-email <name> - Show the email of a contact.
         add-address <name> <address> - Add an address to a contact.
         show-address <name> - Show the address of a contact.
-        add-note <title> <content> - Add a new note.
+        add-note <title> <content> <tags> - Add a new note.
         find-note <title> - Find a note by title.
-        edit-note <title> <new_content> - Edit an existing note.
+        find-note-by-tag <tag> - Find notes containing a specific tag
+        edit-note <title> <new_content> <new_tags> - Edit an existing note.
         delete-note <title> - Delete a note by title.
         all-notes - Show all notes.
         """
@@ -379,6 +380,7 @@ class Bot:
             "edit-note": Command.EDIT_NOTE,
             "delete-note": Command.DELETE_NOTE,
             "all-notes": Command.ALL_NOTES,
+            "find-note-by-tag": Command.FIND_NOTE_BY_TAG
         }
 
         all_commands = list(command_names.keys())
