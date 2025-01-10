@@ -27,3 +27,7 @@ class Command(Enum):
     EDIT_NOTE = 'edit-note'
     DELETE_NOTE = 'delete-note'
     ALL_NOTES = 'all-notes'
+
+    @classmethod
+    def command_list(cls):
+        return [command.value for command in cls]
