@@ -380,6 +380,9 @@ class Bot:
                 except KeyError:
                     print(Fore.RED + "Invalid command.")
                     continue
+                except ValueError:
+                    print(Fore.RED + "Invalid command.")
+                    continue
 
             if cmd_enum in {Command.EXIT, Command.CLOSE}:
                 print(Fore.GREEN + "Good bye!")
