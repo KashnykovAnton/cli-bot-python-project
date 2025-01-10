@@ -24,6 +24,7 @@ class Command(Enum):
     SHOW_ADDRESS = "show-address"
     ADD_NOTE = 'add-note'
     FIND_NOTE = 'find-note'
+    FIND_NOTE_BY_TAG = 'find-note-by-tag'
     EDIT_NOTE = 'edit-note'
     DELETE_NOTE = 'delete-note'
     ALL_NOTES = 'all-notes'

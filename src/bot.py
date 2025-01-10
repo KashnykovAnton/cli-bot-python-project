@@ -359,7 +359,7 @@ class Bot:
         help_text += self.format_command("edit-note <title> <new_content>", "Edit an existing note.")
         help_text += self.format_command("delete-note <title>", "Delete a note by title.")
         help_text += self.format_command("all-notes", "Show all notes.")
-        
+
         return help_text
 
     def run(self):
