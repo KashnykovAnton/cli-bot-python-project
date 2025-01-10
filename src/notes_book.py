@@ -34,6 +34,12 @@ class NotesBook:
             raise ValueError("Tag is required")
         notes_with_tag = [note for note in self.notes if tag in note.tags]
         return notes_with_tag if notes_with_tag else []
+    
+    def find_note_by_tag(self, tag):
+        if not tag:
+            raise ValueError("Tag is required")
+        notes_with_tag = [note for note in self.notes if tag in note.tags]
+        return sorted(notes_with_tag, key=lambda note: note.content) if notes_with_tag else []
 
     def delete_note(self, title):
         if title in self.notes:
