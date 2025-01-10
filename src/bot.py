@@ -386,13 +386,18 @@ class Bot:
         while True:
             message_text = "Enter a command: "
             styled_message = {message_text: "#0000FF"}
-            user_input = self.prompt.styled_prompt(styled_message, all_commands).strip().lower()
+            user_input = self.prompt.styled_prompt(styled_message, all_commands).strip()
 
-            try:
-                cmd_enum = command_names[user_input]
-            except ValueError:
-                print(Fore.RED + "Invalid command.")
-                continue
+            user_input_parts = user_input.split()
+            command = user_input_parts[0]
+            args = user_input_parts[1:]
+
+            if user_input:
+                try:
+                    cmd_enum = command_names[user_input]
+                except KeyError:
+                    print(Fore.RED + "Invalid command.")
+                    continue
 
             if cmd_enum in {Command.EXIT, Command.CLOSE}:
                 print(Fore.GREEN + "Good bye!")
@@ -406,45 +411,96 @@ class Bot:
             elif cmd_enum == Command.CHANGE_CONTACT:
                 self.change_full_contact(args)
             elif cmd_enum == Command.ADD_PHONE:
-                print(self.add_contact(args))
+                if args:
+                    print(self.add_contact(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name and phone number after 'add-phone'.")
             elif cmd_enum == Command.CHANGE_PHONE:
-                print(self.change_phone(args))
+                if len(args) == 3:
+                    print(self.change_phone(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name, old phone number and new phone number after 'change-phone'.")
             elif cmd_enum == Command.CHANGE_NAME:
-                print(self.change_name(args))
+                if len(args) == 2:
+                    print(self.change_name(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the old contact name and new contact name after 'change-name'.")
             elif cmd_enum == Command.SHOW_PHONE:
-                print(self.show_phone(args))
+                if args:
+                    print(self.show_phone(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name after 'show-phone'.")
             elif cmd_enum == Command.REMOVE_PHONE:
-                print(self.remove_phone(args))
+                if len(args) == 2:
+                    print(self.remove_phone(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name and phone number after 'remove-phone'.")
             elif cmd_enum == Command.REMOVE_CONTACT:
-                print(self.remove_contact(args))
+                if args:
+                    print(self.remove_contact(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name after 'remove-contact'.")
             elif cmd_enum == Command.ALL_CONTACTS:
                 print(self.show_all())
             elif cmd_enum == Command.ADD_BIRTHDAY:
-                print(self.add_birthday(args))
+                if len(args) == 2:
+                    print(self.add_birthday(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name and birthday (DD.MM.YYYY) after 'add-birthday'.")
             elif cmd_enum == Command.SHOW_BIRTHDAY:
-                print(self.show_contact_birthday(args))
+                if args:
+                    print(self.show_contact_birthday(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name after 'show-birthday'.")
             elif cmd_enum == Command.BIRTHDAYS:
                 print(self.show_birthdays(args))
             elif cmd_enum == Command.HELP:
                 print(self.show_help())
             elif cmd_enum == Command.ADD_EMAIL:
-                print(self.add_email(args))
+                if len(args) == 2:
+                    print(self.add_email(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name and email after 'add-email'.")
             elif cmd_enum == Command.SHOW_EMAIL:
-                print(self.show_email(args))
+                if args:
+                    print(self.show_email(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name after 'show-email'.")
             elif cmd_enum == Command.ADD_ADDRESS:
-                print(self.add_address(args))
+                if len(args) > 1:
+                    print(self.add_address(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name and address after 'add-address'.")
             elif cmd_enum == Command.SHOW_ADDRESS:
-                print(self.show_address(args))
+                if args:
+                    print(self.show_address(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name after 'show-address'.")
             elif cmd_enum == Command.FIND_CONTACT:
-                print(self.find_contact(args))
+                if args:
+                    print(self.find_contact(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name after 'find-contact'.")
             elif cmd_enum == Command.ADD_NOTE:
-                print(self.add_note(args))
+                if len(args) > 1:
+                    print(self.add_note(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the note title and content after 'add-note'.")
             elif cmd_enum == Command.FIND_NOTE:
-                print(self.find_note(args))
+                if args:
+                    print(self.find_note(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the note title after 'find-note'.")
             elif cmd_enum == Command.EDIT_NOTE:
-                print(self.edit_note(args))
+                if len(args) > 1:
+                    print(self.edit_note(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the note title and new content after 'edit-note'.")
             elif cmd_enum == Command.DELETE_NOTE:
-                print(self.delete_note(args))
+                if args:
+                    print(self.delete_note(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the note title after 'delete-note'.")
             elif cmd_enum == Command.ALL_NOTES:
                 print(self.show_all_notes()) 
             
