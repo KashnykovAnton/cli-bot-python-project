@@ -28,3 +28,4 @@ class Command(Enum):
     EDIT_NOTE = 'edit-note'
     DELETE_NOTE = 'delete-note'
     ALL_NOTES = 'all-notes'
+    
