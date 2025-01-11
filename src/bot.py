@@ -204,8 +204,9 @@ class Bot:
 
     @input_error
     def find_contact(self, args):
-        name = args[0].lower()
-        results = [record for key, record in self.address_book.items() if name in key.lower()]
+        name = args[0]
+        lower_name = name.lower()
+        results = [record for key, record in self.address_book.items() if lower_name in key.lower()]
 
         if not results:
             return Fore.YELLOW + f"No contacts found with name containing '{name}'."
@@ -348,7 +349,36 @@ class Bot:
     def show_all_notes(self, args=None):
         return self.notes_book.show_all_notes()
 
+    @input_error
+    def add_tag_to_note(self, args):
+        title = args[0]
+        tags = args[1:]
+
+        note = self.notes_book.find_note(title)
+        if note == "Note not found.":
+            return Fore.RED + f"Note with title '{title}' not found."
+
+        note.add_tags(tags)
+        return Fore.GREEN + f"Tags added to note '{title}' successfully. Current tags: {', '.join(note.tags)}"
     
+    @input_error
+    def find_note_by_tag(self, args):
+        tag = " ".join(args)
+        return self.notes_book.find_note_by_tag(tag)
+
+    @input_error
+    def remove_tag(self, args):
+        title = args[0]
+        return self.notes_book.remove_tag(title)
+
+    @input_error
+    def add_full_note(self):
+        return self.notes_book.add_full_note()
+    
+    @input_error
+    def change_full_note(self):
+        return self.notes_book.change_full_note()
+
     def format_command(self, command, description):
         command_colored = Fore.GREEN + Style.BRIGHT + command
         description_colored = Fore.WHITE + description
@@ -392,6 +422,11 @@ class Bot:
         help_text += self.format_command("edit-note <title> <new_content>", "Edit an existing note.")
         help_text += self.format_command("delete-note <title>", "Delete a note by title.")
         help_text += self.format_command("all-notes", "Show all notes.")
+        help_text += self.format_command("add-tag <title> <tags>", "Add tags to a note.")
+        help_text += self.format_command("find-by-tag <tag>", "Find notes by tag.")
+        help_text += self.format_command("remove-tag <title>", "Remove tags from a note.")
+        help_text += self.format_command("add-full-note", "Add a new note with all fields interactively.")
+        help_text += self.format_command("change-full-note", "Update all fields of an existing note interactively.")
         
         return help_text
 
@@ -537,6 +572,25 @@ class Bot:
                     print(Fore.YELLOW + "Please provide the note title after 'delete-note'.")
             elif cmd_enum == Command.ALL_NOTES:
                 print(self.show_all_notes()) 
+            elif cmd_enum == Command.ADD_TAG:
+                if len(args) > 1:
+                    print(self.add_tag_to_note(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the note title and tags after 'add-tag'.")
+            elif cmd_enum == Command.FIND_BY_TAG:
+                if args:
+                    print(self.find_note_by_tag(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the tag after 'find-by-tag'.")
+            elif cmd_enum == Command.REMOVE_TAG:
+                if args:
+                    print(self.remove_tag(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the note title after 'remove-tag'.")
+            elif cmd_enum == Command.ADD_FULL_NOTE:
+                self.add_full_note()
+            elif cmd_enum == Command.CHANGE_FULL_NOTE:
+                self.change_full_note()
             
             else:
                 print(Fore.RED + "Unknown command.")

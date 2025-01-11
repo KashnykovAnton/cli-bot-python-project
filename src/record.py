@@ -125,5 +125,5 @@ class Record:
         birthday = self.birthday.value if self.birthday else "not set"
         email = self.email.value if self.email else "not set"
         address = self.address.value if self.address else "not set"
-        return Fore.GREEN + f"Contact name: {self.name.value}, phones: {phones}, email: {email}, address: {address}, birthday: {birthday}"
+        return Fore.RESET + f"Contact name: {self.name.value}, phones: {phones}, email: {email}, address: {address}, birthday: {birthday}"
     
