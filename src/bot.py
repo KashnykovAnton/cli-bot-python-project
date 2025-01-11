@@ -364,15 +364,16 @@ class Bot:
 
     def run(self):
         print(Fore.GREEN + "Welcome to the assistant bot!")
+
+        commands = Command.command_list()
         
         while True:
-            message_text = "Enter a command: "
-            styled_message = {message_text: "#0000FF"}
-            user_input = self.prompt.styled_prompt(styled_message, Command.command_list()).strip()
+            user_input = self.prompt.prompt("Enter a command: ", commands, style='fg:#0000FF')
 
-            user_input_parts = user_input.split()
-            command = user_input_parts[0]
-            args = user_input_parts[1:]
+            if not user_input:
+                continue
+
+            command, args = self.parse_input(user_input)
 
             if user_input:
                 try:
