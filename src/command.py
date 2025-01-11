@@ -30,6 +30,11 @@ class Command(Enum):
     EDIT_NOTE = 'edit-note'
     DELETE_NOTE = 'delete-note'
     ALL_NOTES = 'all-notes'
+    ADD_TAG = 'add-tag'
+    FIND_BY_TAG = 'find-by-tag'
+    REMOVE_TAG = 'remove-tag'
+    ADD_FULL_NOTE = 'add-full-note'
+    CHANGE_FULL_NOTE = 'change-full-note'
 
     @classmethod
     def command_list(cls):
