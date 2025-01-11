@@ -17,11 +17,14 @@ class Command(Enum):
     CHANGE_NAME = "change-name"
     ADD_BIRTHDAY = "add-birthday"
     SHOW_BIRTHDAY = "show-birthday"
+    REMOVE_BIRTHDAY = "remove-birthday"
     BIRTHDAYS = "birthdays"
     ADD_EMAIL = "add-email"
     SHOW_EMAIL = "show-email"
+    REMOVE_EMAIL = "remove-email"
     ADD_ADDRESS = "add-address"
     SHOW_ADDRESS = "show-address"
+    REMOVE_ADDRESS = "remove-address"
     ADD_NOTE = 'add-note'
     FIND_NOTE = 'find-note'
     EDIT_NOTE = 'edit-note'
