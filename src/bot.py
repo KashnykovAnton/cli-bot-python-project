@@ -106,6 +106,16 @@ class Bot:
         return Fore.RED + "Contact not found."
 
     @input_error
+    def remove_birthday(self, args):
+        name = args[0]
+        record = self.address_book.find(name)
+        if isinstance(record, str):
+            record = None
+        if record:
+            return record.remove_birthday()
+        return Fore.RED + "Contact not found."
+
+    @input_error
     def show_birthdays(self, args):
         days = int(args[0]) if args else 7
         upcoming_birthdays = self.address_book.get_upcoming_birthdays(days)
@@ -152,12 +162,22 @@ class Bot:
         return Fore.RED + "Contact not found."
 
     @input_error
+    def remove_email(self, args):
+        name = args[0]
+        record = self.address_book.find(name)
+        if isinstance(record, str):
+            record = None
+        if record:
+            return record.remove_email()
+        return Fore.RED + "Contact not found."
+
+    @input_error
     def add_address(self, args):
         name = args[0]
         address = " ".join(args[1:])
         record = self.address_book.find(name)
         if isinstance(record, str):
-            record = None
+            record = Nonea
         if record:
             return record.add_address(address)
         return Fore.RED + "Contact not found."
@@ -170,6 +190,16 @@ class Bot:
             record = None
         if record:
             return record.show_address()
+        return Fore.RED + "Contact not found."
+
+    @input_error
+    def remove_address(self, args):
+        name = args[0]
+        record = self.address_book.find(name)
+        if isinstance(record, str):
+            record = None
+        if record:
+            return record.remove_address()
         return Fore.RED + "Contact not found."
 
     @input_error
@@ -345,13 +375,16 @@ class Bot:
         help_text += self.format_command("change-name <old_name> <new_name>", "Change a contact's name.")
         help_text += self.format_command("add-birthday <name> <birthday>", "Add a birthday to a contact (format: YYYY-MM-DD).")
         help_text += self.format_command("show-birthday <name>", "Show a contact's birthday.")
+        help_text += self.format_command("remove-birthday <name>", "Remove a contact's birthday.")
         help_text += self.format_command("birthdays [days]", "Show contacts with upcoming birthdays in the next [days] days (default: 7).")
 
         help_text += Fore.YELLOW + Style.BRIGHT + "\nAdditional Info:\n"
         help_text += self.format_command("add-email <name> <email>", "Add an email to a contact.")
         help_text += self.format_command("show-email <name>", "Show the email of a contact.")
+        help_text += self.format_command("remove-email <name>", "Remove the email of a contact.")
         help_text += self.format_command("add-address <name> <address>", "Add an address to a contact.")
         help_text += self.format_command("show-address <name>", "Show the address of a contact.")
+        help_text += self.format_command("remove-address <name>", "Remove the address of a contact.")
         
         help_text += Fore.YELLOW + Style.BRIGHT + "\nNotes Management:\n"
         help_text += self.format_command("add-note <title> <content>", "Add a new note.")
@@ -438,6 +471,11 @@ class Bot:
                     print(self.show_contact_birthday(args))
                 else:
                     print(Fore.YELLOW + "Please provide the contact name after 'show-birthday'.")
+            elif cmd_enum == Command.REMOVE_BIRTHDAY:
+                if args:
+                    print(self.remove_birthday(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name after 'remove-birthday'.")
             elif cmd_enum == Command.BIRTHDAYS:
                 print(self.show_birthdays(args))
             elif cmd_enum == Command.HELP:
@@ -452,6 +490,11 @@ class Bot:
                     print(self.show_email(args))
                 else:
                     print(Fore.YELLOW + "Please provide the contact name after 'show-email'.")
+            elif cmd_enum == Command.REMOVE_EMAIL:
+                if args:
+                    print(self.remove_email(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name after 'remove-email'.")
             elif cmd_enum == Command.ADD_ADDRESS:
                 if len(args) > 1:
                     print(self.add_address(args))
@@ -462,6 +505,11 @@ class Bot:
                     print(self.show_address(args))
                 else:
                     print(Fore.YELLOW + "Please provide the contact name after 'show-address'.")
+            elif cmd_enum == Command.REMOVE_ADDRESS:
+                if args:
+                    print(self.remove_address(args))
+                else:
+                    print(Fore.YELLOW + "Please provide the contact name after 'remove-address'.")
             elif cmd_enum == Command.FIND_CONTACT:
                 if args:
                     print(self.find_contact(args))

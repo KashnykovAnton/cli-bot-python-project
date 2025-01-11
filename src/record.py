@@ -70,6 +70,13 @@ class Record:
         return Fore.GREEN + f"Contact name: {self.name.value}, birthday: {birthday}"
 
     @input_error
+    def remove_birthday(self):
+        if self.birthday:
+            self.birthday = None
+            return Fore.GREEN + f"Birthday for {self.name.value} successfully deleted."
+        return Fore.YELLOW + f"Birthday for {self.name.value}: not set"
+
+    @input_error
     def add_email(self, email):
         if self.email is not None:
             self.email = Email(email)
@@ -83,6 +90,13 @@ class Record:
         if self.email:
             return Fore.GREEN + f"Contact name: {self.name.value}, email: {self.email.value}"
         return Fore.YELLOW + f"Email for {self.name}: not set"
+
+    @input_error
+    def remove_email(self):
+        if self.email:
+            self.email = None
+            return Fore.GREEN + f"Email for {self.name.value} successfully deleted."
+        return Fore.YELLOW + f"Email for {self.name.value}: not set"
     
     @input_error
     def add_address(self, address):
@@ -97,6 +111,13 @@ class Record:
     def show_address(self):
         if self.address:
             return Fore.GREEN + f"Contact name: {self.name.value}, address: {self.address.value}"
+        return Fore.YELLOW + f"Address for {self.name.value}: not set"
+    
+    @input_error
+    def remove_address(self):
+        if self.address:
+            self.address = None
+            return Fore.GREEN + f"Address for {self.name.value} successfully deleted."
         return Fore.YELLOW + f"Address for {self.name.value}: not set"
 
     def __str__(self):
