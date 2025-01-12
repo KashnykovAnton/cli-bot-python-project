@@ -19,7 +19,7 @@ pip install -r requirements.txt
 ### 3. Run the Bot
 Start the bot by running the main script:
 ```bash
-python bot.py
+python main.py
 ```
 
 ### 4. Deactivate Virtual Environment
