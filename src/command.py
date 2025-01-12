@@ -28,7 +28,7 @@ class Command(Enum):
     ADD_NOTE = 'add-note'
     FIND_NOTE = 'find-note'
     EDIT_NOTE = 'edit-note'
-    DELETE_NOTE = 'delete-note'
+    REMOVE_NOTE = 'remove-note'
     ALL_NOTES = 'all-notes'
     ADD_TAG = 'add-tag'
     FIND_BY_TAG = 'find-by-tag'
