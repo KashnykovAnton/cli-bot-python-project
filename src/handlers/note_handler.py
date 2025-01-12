@@ -1,5 +1,4 @@
 from colorama import Fore
-from src.note import Note
 from src.utils import input_error
 
 class NoteHandler:

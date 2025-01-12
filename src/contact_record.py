@@ -1,9 +1,8 @@
 from colorama import Fore
-from datetime import datetime
 from .fields import *
 from src.utils import input_error
 
-class Record:
+class ContactRecord:
     def __init__(self, name):
         try:
             self.name = Name(name)

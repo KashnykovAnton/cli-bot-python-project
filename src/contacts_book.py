@@ -1,21 +1,20 @@
 import pickle
-from datetime import datetime, timedelta
 from colorama import Fore
 from collections import UserDict
-from .record import Record
+from datetime import datetime, timedelta
 from .fields import *
 
-class AddressBook(UserDict):
+class ContactsBook(UserDict):
     @staticmethod
-    def load(filename="addressbook.pkl"):
+    def load(filename="contactsbook.pkl"):
         try:
             with open(filename, "rb") as file:
                 return pickle.load(file)
         except FileNotFoundError:
             print(Fore.YELLOW + "No saved address book found. Starting with a new one.")
-            return AddressBook()
+            return ContactsBook()
 
-    def save(self, filename="addressbook.pkl"):
+    def save(self, filename="contactsbook.pkl"):
         with open(filename, "wb") as file:
             pickle.dump(self, file)
         print(Fore.GREEN + "Address book saved successfully.")

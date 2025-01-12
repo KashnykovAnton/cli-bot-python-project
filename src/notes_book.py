@@ -1,6 +1,6 @@
 import pickle
 from colorama import Fore
-from .note import Note
+from .note_record import NoteRecord
 
 class NotesBook:
     def __init__(self):
@@ -23,7 +23,7 @@ class NotesBook:
     def add_note(self, title, content):
         if title in self.notes:
             return Fore.RED + f"Note with title '{title}' already exists."
-        note = Note(title, content)
+        note = NoteRecord(title, content)
         self.notes[title] = note
         return Fore.GREEN + f"Note '{title}' added successfully."
 
