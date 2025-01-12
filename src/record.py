@@ -66,15 +66,17 @@ class Record:
     
     @input_error
     def show_birthday(self):
-        birthday = self.birthday.value if self.birthday else "not set"
-        return Fore.GREEN + f"Contact name: {self.name.value}, birthday: {birthday}"
+        if self.birthday:
+            return Fore.GREEN + f"Contact name: {self.name}, birthday: {self.birthday}"
+        return Fore.YELLOW + f"Birthday for {self.name}: not set"
+        
 
     @input_error
     def remove_birthday(self):
         if self.birthday:
             self.birthday = None
-            return Fore.GREEN + f"Birthday for {self.name.value} successfully deleted."
-        return Fore.YELLOW + f"Birthday for {self.name.value}: not set"
+            return Fore.GREEN + f"Birthday for {self.name} successfully deleted."
+        return Fore.YELLOW + f"Birthday for {self.name}: not set"
 
     @input_error
     def add_email(self, email):
