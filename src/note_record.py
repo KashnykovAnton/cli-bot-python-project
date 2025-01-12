@@ -1,12 +1,16 @@
-class Note:
+from src.utils import input_error
+
+class NoteRecord:
     def __init__(self, title, content):
         self.title = title
         self.content = content
         self.tags = []
     
+    @input_error
     def edit(self, new_content):
         self.content = new_content
 
+    @input_error
     def add_tags(self, tags):
         if isinstance(tags, list):
             for tag in tags:

@@ -1,7 +1,7 @@
 from colorama import Fore, init
 from src.command import Command
 from src.completer import Prompt
-from src.address_book import AddressBook
+from src.contacts_book import ContactsBook
 from src.notes_book import NotesBook
 from src.utils import input_error
 from src.handlers import *
@@ -10,13 +10,13 @@ init(autoreset=True)
 
 class Bot:
     def __init__(self):
-        self.address_book = AddressBook.load()
+        self.contacts_book = ContactsBook.load()
         self.notes_book = NotesBook.load()
         self.prompt = Prompt()
         self.help_handler = Help()
-        self.contact_handler = ContactHandler(self.address_book)
-        self.contact_additional_handler = ContactAdditionalHandler(self.address_book)
-        self.contact_full_handler = ContactFullHandler(self.address_book)
+        self.contact_handler = ContactHandler(self.contacts_book)
+        self.contact_additional_handler = ContactAdditionalHandler(self.contacts_book)
+        self.contact_full_handler = ContactFullHandler(self.contacts_book)
         self.note_handler = NoteHandler(self.notes_book)
         self.note_full_handler = NoteFullHandler(self.notes_book)
 
@@ -51,7 +51,7 @@ class Bot:
 
             if cmd_enum in {Command.EXIT, Command.CLOSE}:
                 print(Fore.GREEN + "Good bye!")
-                self.address_book.save()
+                self.contacts_book.save()
                 self.notes_book.save()
                 break
             elif cmd_enum == Command.HELLO:

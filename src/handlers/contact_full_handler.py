@@ -1,14 +1,13 @@
 from colorama import Fore
-from src.record import Record
 from src.utils import input_error
 from src.handlers.contact_handler import ContactHandler
 from src.handlers.contact_additional_handler import ContactAdditionalHandler
 
 class ContactFullHandler:
-    def __init__(self, address_book):
-        self.address_book = address_book
-        self.contact_handler = ContactHandler(address_book)
-        self.contact_additional_handler = ContactAdditionalHandler(address_book)
+    def __init__(self, contacts_book):
+        self.contacts_book = contacts_book
+        self.contact_handler = ContactHandler(contacts_book)
+        self.contact_additional_handler = ContactAdditionalHandler(contacts_book)
 
     @input_error
     def add_full_contact(self):
@@ -19,7 +18,7 @@ class ContactFullHandler:
         if not name:
             print(Fore.RED + "Name is required. Cancelling operation.")
             return
-        record = self.address_book.find(name)
+        record = self.contacts_book.find(name)
         if isinstance(record, str):
             record = None
         if record:
@@ -60,7 +59,7 @@ class ContactFullHandler:
         
         # Step 1: Enter Old Name
         old_name = input(Fore.YELLOW + "Enter the current name of the contact: ").strip()
-        record = self.address_book.find(old_name)
+        record = self.contacts_book.find(old_name)
         if isinstance(record, str):
             record = None
         if not record:

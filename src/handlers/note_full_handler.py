@@ -1,5 +1,5 @@
 from colorama import Fore
-from src.note import Note
+from src.note_record import NoteRecord
 
 class NoteFullHandler:
     def __init__(self, notes_book):
@@ -24,7 +24,7 @@ class NoteFullHandler:
         if not content:
             print(Fore.RED + "Content is required. Cancelling operation.")
             return
-        note = Note(title, content)
+        note = NoteRecord(title, content)
         self.notes_book.notes[title] = note
         print(Fore.GREEN + f"Note '{title}' added successfully with content.")
 
@@ -64,7 +64,7 @@ class NoteFullHandler:
                 print(Fore.RED + f"Note with title '{new_title}' already exists. Skipping title change.")
             else:
                 note_to_update = self.notes_book.notes.pop(title)
-                note = Note(title=new_title, content=note_to_update.content)
+                note = NoteRecord(title=new_title, content=note_to_update.content)
                 note.add_tags(note_to_update.tags)
                 self.notes_book.notes[new_title] = note
                 print(Fore.GREEN + f"Title updated to '{new_title}'.")
