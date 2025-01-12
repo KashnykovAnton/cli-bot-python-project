@@ -110,11 +110,7 @@ Additionally, the project leverages Python’s built-in libraries:
 ## Developer
 This project is developed and maintained by:
 
-**Kashnykov Anton**  
-[GitHub Repository](https://github.com/KashnykovAnton)
-**Irina Bazhinova**  
-[GitHub Repository](https://github.com/Iris2030)
-**Ostafiichuk Oleksii**  
-[GitHub Repository](https://github.com/OstafiichukO)
-**Aleksey Dr**  
-[GitHub Repository](https://github.com/Aleksey-Dr)
+**Kashnykov Anton** [GitHub Repository](https://github.com/KashnykovAnton)
+**Irina Bazhinova** [GitHub Repository](https://github.com/Iris2030)
+**Ostafiichuk Oleksii** [GitHub Repository](https://github.com/OstafiichukO)
+**Aleksey Dr** [GitHub Repository](https://github.com/Aleksey-Dr)
