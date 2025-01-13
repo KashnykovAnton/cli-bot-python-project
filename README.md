@@ -1,4 +1,4 @@
-# Contacts and Notes Book CLI Bot
+# Contacts & Notes Assistant
 
 This project provides a command-line interface (CLI) bot for managing a **Contacts Book** and **Notes Book**. Users can save, edit, and manage their contacts and notes efficiently. The bot offers a user-friendly interface to interact with data, making everyday tasks simpler and more organized.
 
@@ -30,7 +30,7 @@ deactivate
 
 ---
 
-## Using the CLI Bot
+## Using the Contacts & Notes Assistant
 The bot is designed to work in the console. Users interact with it by typing commands, and the bot responds with helpful outputs to guide the user. Simply type a command and follow the instructions to perform various actions on contacts or notes.
 
 ### Example Usage
